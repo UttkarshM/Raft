@@ -1,0 +1,70 @@
+// raft.proto - Raft Consensus Algorithm gRPC Service Definition
+syntax = "proto3";
+
+package raft;
+
+// Go package path for generated code
+option go_package = "./proto";
+
+// ============================================
+// Message Definitions
+// ============================================
+
+// LogEntry represents a single entry in the Raft log
+message LogEntry {
+    int32 term = 1;      // Term when entry was received by leader
+    int32 index = 2;     // Position in the log
+    bytes command = 3;   // The actual command (serialized)
+}
+
+// ============================================
+// RequestVote RPC (for leader election)
+// ============================================
+
+// RequestVoteRequest is sent by candidates to gather votes
+message RequestVoteRequest {
+    int32 term = 1;            // Candidate's term
+    string candidate_id = 2;   // Candidate requesting vote
+    int32 last_log_index = 3;  // Index of candidate's last log entry
+    int32 last_log_term = 4;   // Term of candidate's last log entry
+}
+
+// RequestVoteResponse is the reply from a node
+message RequestVoteResponse {
+    int32 term = 1;          // Current term, for candidate to update itself
+    bool vote_granted = 2;   // True means candidate received vote
+}
+
+// ============================================
+// AppendEntries RPC (for log replication and heartbeats)
+// ============================================
+
+// AppendEntriesRequest is sent by leader to replicate log entries
+// Also used as heartbeat when entries is empty
+message AppendEntriesRequest {
+    int32 term = 1;              // Leader's term
+    string leader_id = 2;        // So follower can redirect clients
+    int32 prev_log_index = 3;    // Index of log entry immediately preceding new ones
+    int32 prev_log_term = 4;     // Term of prev_log_index entry
+    repeated LogEntry entries = 5; // Log entries to store (empty for heartbeat)
+    int32 leader_commit = 6;     // Leader's commit index
+}
+
+// AppendEntriesResponse is the reply from a follower
+message AppendEntriesResponse {
+    int32 term = 1;     // Current term, for leader to update itself
+    bool success = 2;   // True if follower contained entry matching prev_log_index and prev_log_term
+}
+
+// ============================================
+// Service Definition
+// ============================================
+
+// RaftService defines the RPCs that Raft nodes use to communicate
+service RaftService {
+    // RequestVote RPC - Called by candidates to gather votes during election
+    rpc RequestVote(RequestVoteRequest) returns (RequestVoteResponse);
+
+    // AppendEntries RPC - Called by leader to replicate log entries (also used as heartbeat)
+    rpc AppendEntries(AppendEntriesRequest) returns (AppendEntriesResponse);
+}
