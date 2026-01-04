@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  raft-node-1:
+    build: .
+    container_name: raft-node-1
+    environment:
+      - NODE_ID=node1
+      - NODE_ADDRESS=raft-node-1:5001
+      - PEERS=raft-node-2:5002,raft-node-3:5003
+    ports:
+      - "5001:5001"
+    networks:
+      - raft-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  raft-node-2:
+    build: .
+    container_name: raft-node-2
+    environment:
+      - NODE_ID=node2
+      - NODE_ADDRESS=raft-node-2:5002
+      - PEERS=raft-node-1:5001,raft-node-3:5003
+    ports:
+      - "5002:5002"
+    networks:
+      - raft-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5002/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  raft-node-3:
+    build: .
+    container_name: raft-node-3
+    environment:
+      - NODE_ID=node3
+      - NODE_ADDRESS=raft-node-3:5003
+      - PEERS=raft-node-1:5001,raft-node-2:5002
+    ports:
+      - "5003:5003"
+    networks:
+      - raft-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5003/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  raft-network:
+    driver: bridge
