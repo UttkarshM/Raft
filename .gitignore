@@ -1,0 +1,78 @@
+# Claude AI files and documentation
+.claude/
+*.jsonl
+CLAUDE.md
+CLAUDE.md.backup
+*_BACKUP.md
+IMPLEMENTATION_GUIDE.md
+notes.md
+todo.md
+IMPLEMENTATION_REPORT.md
+QUICK_START.md
+SUMMARY.md
+MODEL_ROUTER_README.md
+INTEGRATION_SUMMARY.md
+AWS_DEPLOYMENT_GUIDE.md
+DEVOPS_BEGINNERS_GUIDE.md
+
+# Visual-Automation node_modules and build artifacts
+Visual-Automation/node_modules/
+Visual-Automation/.next/
+Visual-Automation/.env.local
+Visual-Automation/uploads/
+
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/raft-server
+/model_router_demo
+
+# Go test files
+*.test
+*.out
+coverage.txt
+coverage.html
+
+# Go workspace
+go.work
+go.work.sum
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Environment files
+.env
+.env.local
+
+# Documentation builds
+*.pdf
+!Uttkarsh_Resume_FAANG.pdf
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+terraform/outputs.txt
+
+# Docker
+docker-compose.override.yml
