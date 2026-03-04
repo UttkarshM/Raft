@@ -1,0 +1,14 @@
+# AWS Region (us-east-1 has more free tier eligibility)
+aws_region = "us-east-1"
+
+# ECS Cluster name
+cluster_name = "raft-cluster"
+
+# Application name (used for naming resources)
+app_name = "raft-consensus"
+
+# EC2 instance type (t2.micro is free tier eligible for 12 months)
+instance_type = "t2.micro"
+
+# EC2 Key pair name for SSH access (must be created in AWS console first)
+key_pair_name = "raft-key"
