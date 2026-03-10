@@ -15,6 +15,14 @@ INTEGRATION_SUMMARY.md
 AWS_DEPLOYMENT_GUIDE.md
 DEVOPS_BEGINNERS_GUIDE.md
 
+# Guides and personal docs
+guides/
+METRICS_METHODOLOGY.md
+RESUME_CHANGES_SUMMARY.md
+Uttkarsh_Resume_FAANG.tex
+updated_resume.tex
+terraform/FREE_TIER_GUIDE.md
+
 # Visual-Automation node_modules and build artifacts
 Visual-Automation/node_modules/
 Visual-Automation/.next/
